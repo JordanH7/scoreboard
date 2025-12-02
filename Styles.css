@@ -1,0 +1,87 @@
+.menu-btn {
+    border-radius: 10px;
+    position: fixed;
+    background-color: #000;
+    border: none;
+    height: 2.5rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+    z-index: 100;
+}
+
+.menu-btn:hover {
+    background-color: #222;
+}
+
+div {
+    border-radius: 10px;
+    width: 2rem;
+    height: 3px;
+    background-color: #FFF;
+    margin: 5px 0;
+}
+
+#menu-overlay {
+    border-radius: 5px;
+    position: fixed;
+    display: none;
+    width: 30%;
+    height: 25%;
+    top: 0;
+    background-color: #888;
+    z-index: 101;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.close-btn {
+    position: absolute;
+    font-size: 1.2rem;
+    top: 3px;
+    right: 3px;
+    width: relative;
+    height: relative;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.tab-btn {
+    border-radius: 5px;
+    display: flex;
+    position: relative;
+    margin: 5px 0;
+    width: 75%;
+    height: 16px;
+    gap: 2px;
+    border: none;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tab-btn:hover {
+    background-color: #777;
+}
+
+.page {
+    border-radius: 0;
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    background-color: #FFF;
+    z-index: 10;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.default {
+    display: flex;
+}

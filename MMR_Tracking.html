@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MMR Tracking</title>
+        <link rel="stylesheet" href="Styles.css">
+        <script src="MMR_Tracking.js" defer></script>
+    </head>
+    <body>
+        <button class="menu-btn" id="menu" onclick="menu_display(true);">
+            <div></div>
+            <div></div>
+            <div></div>
+        </button>
+        <div id="menu-overlay">
+            <button class="close-btn" id="overlay-close" onclick="menu_display(false);">x</button>
+            <button class="tab-btn" id="match-btn" onclick="page_display(false, 'all'); page_display(true, 'match-page');">In Match</button>
+            <button class="tab-btn" id="randomizer-btn" onclick="page_display(false, 'all'); page_display(true, 'randomizer-page');">Randomizer</button>
+            <button class="tab-btn" id="saves-btn" onclick="page_display(false, 'all'); page_display(true, 'saves-page');">Saved Teams</button>
+            <button class="tab-btn" id="stats-btn" onclick="page_display(false, 'all'); page_display(true, 'stats-page');">Stat Breakdown</button>
+            <button class="tab-btn" id="replay-btn" onclick="page_display(false, 'all'); page_display(true, 'replay-page');">Replay Mode</button>
+        </div>
+        
+        <!-- Pages ('Match Page is default') -->
+        <div class="page default" id="match-page">
+            <h1>Match</h1>
+        </div>
+        <div class="page" id="randomizer-page">
+            <h1>Randomize Teams</h1>
+        </div>
+        <div class="page" id="saves-page">
+            <h1>Saved Teams</h1>
+        </div>
+        <div class="page" id="stats-page">
+            <h1>Stat Breakdowns</h1>
+        </div>
+        <div class="page" id="replay-page">
+            <h1>Replay Mode</h1>
+        </div>
+    </body>
+</html>
