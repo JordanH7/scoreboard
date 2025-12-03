@@ -18,6 +18,7 @@
             <button class="tab-btn" id="match-btn" onclick="page_display(false, 'all'); page_display(true, 'match-page');">In Match</button>
             <button class="tab-btn" id="randomizer-btn" onclick="page_display(false, 'all'); page_display(true, 'randomizer-page');">Randomizer</button>
             <button class="tab-btn" id="saves-btn" onclick="page_display(false, 'all'); page_display(true, 'saves-page');">Saved Teams</button>
+            <button class="tab-btn" id="players-btn" onclick="page_display(false, 'all'); page_display(true, 'players-page');">Players</button>
             <button class="tab-btn" id="stats-btn" onclick="page_display(false, 'all'); page_display(true, 'stats-page');">Stat Breakdown</button>
             <button class="tab-btn" id="replay-btn" onclick="page_display(false, 'all'); page_display(true, 'replay-page');">Replay Mode</button>
         </div>
@@ -66,9 +67,41 @@
         </div>
         <div class="page" id="randomizer-page">
             <h1>Randomize Teams</h1>
+            <button class="" id="randomize" onclick="getGeneratedTeams()">Randomize</button>
+        <div class="court-container">
+            <div class="volleyball-court">
+                <div class="court-side" data-side="left">
+                    <div class="player-box"><span class="player-name">P6</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P1</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P5</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P2</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P4</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P3</span><span class="edit-player">✏️</span></div>
+                </div>
+                <div class="court-net"></div>
+                <div class="court-side" data-side="right">
+                    <div class="player-box"><span class="player-name">P3</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P4</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P2</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P5</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P1</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name">P6</span><span class="edit-player">✏️</span></div>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="page" id="saves-page">
             <h1>Saved Teams</h1>
+        </div>
+        <div class="page" id="players-page">
+            <h1>Add Players</h1>
+            <form id="playerData-randomizer" onsubmit="addPlayerData()">
+                <input type="text" class="text-input_large" id="player-name" placeholder="Player Name">
+                <input type="number" class="text-input_med" id="player-rating" placeholder="Player Rating"> <!-- Temporary until elo is figured out -->
+                <input type="submit" class="submit" id="submit-player" value="Add Player">
+                <br>
+            </form>
+            <ul class="list" id="players-list"></ul>
         </div>
         <div class="page" id="stats-page">
             <h1>Stat Breakdowns</h1>
