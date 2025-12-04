@@ -217,10 +217,9 @@ function generateTeams(numOfTeams, pointTolerance) {
 
 let team_Left = 0;
 let team_Right = 0;
-let prevTeam = '';
 let serving = 'right';
 let hasServedLeft = false;
-let hasServedRight = false;
+let hasServedRight = true;
 function updateScore(team, reset = false) {
     team == 'left' ? team_Left += 1 : team_Right += 1;
 
@@ -239,11 +238,13 @@ function updateScore(team, reset = false) {
         serving = team;
         changeServeSide(team, 'auto');
 
+        console.log(team, hasServedLeft, hasServedRight);
         if (team === 'left' && !hasServedLeft) {
             hasServedLeft = true;
         } else if (team === 'right' && !hasServedRight) {
             hasServedRight = true;
         } else {
+            console.log('rotate positions', team);
             rotatePositions(team);
         }
     }
@@ -258,16 +259,25 @@ function changeServeSide(newSide, type = 'manual') {
     } else {
         console.log("Can't change serve in a match");
     }
+    if (type == 'manual') {
+        if (newSide == 'left') {
+            hasServedLeft = true;
+            hasServedRight = false;
+        } else if (newSide == 'right') {
+            hasServedLeft = false;
+            hasServedRight = true;
+        }
+    }
 }
 
 function rotatePositions(team) {
-    if (team == 'team1') {
+    if (team == 'left') {
         const temp = document.getElementById('left-P6').textContent;
         for (let i = numOfPlayers; i > 1; i--) {
             document.getElementById(`left-P${i}`).textContent = document.getElementById(`left-P${i-1}`).textContent;
         }
         document.getElementById('left-P1').textContent = temp;
-    } else if (team == 'team2') {
+    } else if (team == 'right') {
         const temp = document.getElementById('right-P6').textContent;
         for (let i = numOfPlayers; i > 1; i--) {
             document.getElementById(`right-P${i}`).textContent = document.getElementById(`right-P${i-1}`).textContent;
