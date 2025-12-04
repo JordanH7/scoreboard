@@ -29,8 +29,8 @@
             <div class="question" id="question1-match" data-data-type="Team Score">
                 <h4>Team Scored</h4>
                 <div class="answer-container">
-                    <button class="answer" id="answer1-question1">Team1</button>
-                    <button class="answer" id="answer2-question1">Team2</button>
+                    <button class="answer" id="answer1-question1" onclick="updateScore('team1')">Team1</button>
+                    <button class="answer" id="answer2-question1" onclick="updateScore('team2')">Team2</button>
                 </div>
             </div>
             <div class="question" id="question2-match" data-data-type="Player Score" style="display: none">
@@ -67,25 +67,27 @@
         </div>
         <div class="page" id="randomizer-page">
             <h1>Randomize Teams</h1>
-            <button class="" id="randomize" onclick="getGeneratedTeams()">Randomize</button>
+            <button class="" id="randomize" onclick="resetCourt(); setupTeams(2, 5); getAllPlayerNames();">Randomize</button>
+            <div class="text-box" id="elos">Elos: 0 : 0</div>
+            <div class="text-box" id="score">Score: 0 : 0</div>
         <div class="court-container">
             <div class="volleyball-court">
                 <div class="court-side" data-side="left">
-                    <div class="player-box"><span class="player-name">P6</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P1</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P5</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P2</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P4</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P3</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="left-P6">P6</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="left-P1">P1</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="left-P5">P5</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="left-P2">P2</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="left-P4">P4</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="left-P3">P3</span><span class="edit-player">✏️</span></div>
                 </div>
                 <div class="court-net"></div>
                 <div class="court-side" data-side="right">
-                    <div class="player-box"><span class="player-name">P3</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P4</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P2</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P5</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P1</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name">P6</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="right-P3">P3</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="right-P4">P4</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="right-P2">P2</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="right-P5">P5</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="right-P1">P1</span><span class="edit-player">✏️</span></div>
+                    <div class="player-box"><span class="player-name" id="right-P6">P6</span><span class="edit-player">✏️</span></div>
                 </div>
             </div>
         </div>
