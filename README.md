@@ -7,6 +7,8 @@
     * In match (tab for the apple watch)
     * Randomizer
     * Saved teams
+      * Load team button
+        * Loads team onto randomizer tab
     * Stat breakdown (by person)
     * Replay mode
   * Manual Inputs
@@ -22,6 +24,7 @@
     * Players current positions
     * Team generation (randomizer)
       * Saving teams
+      * Loading saved teams
       * ? Personaly rating teams (to affect MMR in someway) ?
       * cursor: wait;
 * Game Options (Volleyball, pickleball, etc)

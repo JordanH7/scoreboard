@@ -29,8 +29,8 @@
             <div class="question" id="question1-match" data-data-type="Team Score">
                 <h4>Team Scored</h4>
                 <div class="answer-container">
-                    <button class="answer" id="answer1-question1" onclick="updateScore('team1')">Team1</button>
-                    <button class="answer" id="answer2-question1" onclick="updateScore('team2')">Team2</button>
+                    <button class="answer" id="answer1-question1" onclick="updateScore('left')">Team1</button>
+                    <button class="answer" id="answer2-question1" onclick="updateScore('right')">Team2</button>
                 </div>
             </div>
             <div class="question" id="question2-match" data-data-type="Player Score" style="display: none">
@@ -71,6 +71,7 @@
             <div class="text-box" id="elos">Elos: 0 : 0</div>
             <div class="text-box" id="score">Score: 0 : 0</div>
         <div class="court-container">
+            <button class="serving-btn" id="serving-left" onclick="changeServeSide('right', 'manual')" style="display: none">⚫</button>
             <div class="volleyball-court">
                 <div class="court-side" data-side="left">
                     <div class="player-box"><span class="player-name" id="left-P6">P6</span><span class="edit-player">✏️</span></div>
@@ -90,6 +91,7 @@
                     <div class="player-box"><span class="player-name" id="right-P6">P6</span><span class="edit-player">✏️</span></div>
                 </div>
             </div>
+            <button class="serving-btn" id="serving-right" onclick="changeServeSide('left')">⚫</button>
         </div>
         </div>
         <div class="page" id="saves-page">

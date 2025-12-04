@@ -76,7 +76,7 @@ div {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: #FFF;
+    background-color: #fff;
     z-index: 10;
     overflow-y: auto;
     overflow-x: hidden;
@@ -84,20 +84,22 @@ div {
 }
 
 h1 {
-    margin-block-start: 25px;
+    margin-block-start: 5%;
     margin-block-end: 0;
+    font-size: xx-large;
 }
 
 h4 {
     margin-block-start: 0;
     margin-block-end: 0;
+    font-size: large;
 }
 
 .question {
     border-radius: 0;
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 75%;
     height: auto;
     margin: 0px 0;
     justify-content: flex-start;
@@ -111,8 +113,8 @@ h4 {
 .answer {
     border-radius: 8px;
     display: flex;
-    width: 80px;
-    height: 28px;
+    width: 150px;
+    height: auto;
     margin: 2px 2px;
     text-align: center;
     justify-content: center;
@@ -185,6 +187,25 @@ h4 {
     width: auto;
     height: auto;
     margin: 0;
+}
+
+.serving-btn {
+    display: inline-flex;          /* keeps it inline but flex for centering */
+    justify-content: center;       /* center the * horizontally */
+    align-items: center;           /* center the * vertically */
+    width: 40px;                   /* fixed size for consistency */
+    height: 40px;
+    margin: 5px;                   /* small spacing around */
+    border: none;        /* visible border */
+    border-radius: 50%;            /* circular button */
+    font-size: 20px;               /* size of the * */
+    font-weight: bold;
+    cursor: pointer;               /* pointer on hover */
+    transition: all 0.3s ease;     /* smooth hover effect */
+}
+
+.serving-btn:hover {
+    transform: scale(1.1);         /* subtle zoom */
 }
 
 .court-container {
