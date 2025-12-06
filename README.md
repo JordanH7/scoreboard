@@ -5,7 +5,11 @@
 * HTML Website
   * Tabs
     * In match (tab for the apple watch)
+      * ? Option for adding 'flags' (identifiers for a point) ?
     * Randomizer
+      * ? Add court button ?
+        * Allows for more teams to be generated from a list
+        * Adds 'Team 3', 'Team 4', etc options to first question and allows for data inputs from multiple games
     * Saved teams
       * Load team button
         * Loads team onto randomizer tab

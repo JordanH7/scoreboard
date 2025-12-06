@@ -28,6 +28,8 @@ div {
     display: none;
     width: 30%;
     height: 25%;
+    min-width: 150px;
+    min-height: 100px;
     top: 0;
     background-color: #888;
     z-index: 101;
@@ -111,7 +113,9 @@ h4 {
 }
 
 .answer {
+    border: 2px solid #000;
     border-radius: 8px;
+    -webkit-appearance: none;
     display: flex;
     width: 80px;
     height: 40px;
@@ -140,6 +144,11 @@ h4 {
     z-index: 10;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.answer:last-child:nth-child(odd) {
+    grid-column: span 2;
+    justify-self: center;
 }
 
 .answer:hover {

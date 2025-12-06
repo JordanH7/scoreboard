@@ -221,6 +221,7 @@ let serving = 'right';
 let hasServedLeft = false;
 let hasServedRight = true;
 function updateScore(team, reset = false) {
+    updateQuestionNames(team == '' ? team = 'left' : team);
     team == 'left' ? team_Left += 1 : team_Right += 1;
 
     if (reset) {
@@ -247,6 +248,16 @@ function updateScore(team, reset = false) {
             console.log('rotate positions', team);
             rotatePositions(team);
         }
+    }
+}
+
+function updateQuestionNames(scoringTeam) {
+    for (let i = 1; i <= numOfPlayers; i++) {
+        document.getElementById(`answer${i}-question2`).textContent = document.getElementById(`${scoringTeam}-P${i}`).textContent;
+    }
+    scoringTeam == 'left' ? scoringTeam = 'right' : scoringTeam = 'left';
+    for (let i = 1; i <= numOfPlayers; i++) {
+        document.getElementById(`answer${i}-question4`).textContent = document.getElementById(`${scoringTeam}-P${i}`).textContent;
     }
 }
 
