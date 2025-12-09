@@ -10,32 +10,32 @@
       * ? Add court button ?
         * Allows for more teams to be generated from a list
         * Adds 'Team 3', 'Team 4', etc options to first question and allows for data inputs from multiple games
+      * If player edited isn't in the database, create them
     * Saved teams
-      * Load team button
-        * Loads team onto randomizer tab
+      * Load team button : done (just click on the box listing the teams)
+        * Loads team onto randomizer tab : done
     * Stat breakdown (by person)
     * Replay mode
   * Manual Inputs
     * Players starting rankings
     * Players (+ starting locations)
-    * Subbing players
+    * Subbing players : done
     * Stat adjustments
-    * ? Score to win (affect MMR) ?
+    * ? Score to win (15 or 21) (affect MMR) ?
   * Display / Features
     * MMR values by player
     * MMR values by team
     * MMR stat breakdowns
-    * Players current positions
+    * Players current positions : done
     * Team generation (randomizer)
-      * Saving teams
-      * Loading saved teams
+      * Saving teams : done
+      * Loading saved teams : done
       * ? Personaly rating teams (to affect MMR in someway) ?
-      * cursor: wait;
 * Game Options (Volleyball, pickleball, etc)
 * Save Player Stats (Sequel)
 * Apple Watch
   * Controls points
-  * Tracks errors, aces, kills, blocks (+ player involved)
+  * Tracks errors, aces, kills, blocks (+ player involved) : done
 * Add New Players
   * Starting MMR value or rankings
 

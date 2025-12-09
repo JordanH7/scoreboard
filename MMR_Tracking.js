@@ -122,6 +122,106 @@ function addPlayerData() {
     console.log(playerData);
 }
 
+var savedTeams = [];
+function saveTeam() {
+    const teamsData = [[], []];
+    const list = document.getElementById('teams-list');
+    const delete_btn = document.createElement("button");
+
+    // Collect left team players
+    for (let i = 1; i <= numOfPlayers; i++) {
+        const element = document.getElementById(`left-P${i}`);
+        if (element) {
+            teamsData[0].push(element.textContent);
+        }
+    }
+    
+    // Collect right team players
+    for (let i = 1; i <= numOfPlayers; i++) {
+        const element = document.getElementById(`right-P${i}`);
+        if (element) {
+            teamsData[1].push(element.textContent);
+        }
+    }
+
+    console.log('Teams to save:', teamsData);
+
+    /* Adds the data to the list */
+    const li = document.createElement('li');
+    li.className = "li-button-teams";
+    li.setAttribute("tabindex", "0");
+
+    li.onclick = () => {
+        console.log("List item clicked:", teamsData);
+        setupTeams(2, 5, teamsData);
+        page_display(false, 'all');
+        page_display(true, 'randomizer-page');
+    };
+    
+    /* Deletes a team */
+    delete_btn.textContent = "X";
+    delete_btn.classList = "delete-btn delete-teams";
+    
+    delete_btn.onclick = (event) => {
+        event.stopPropagation();
+        if (confirmEvent(`Are you sure you want to delete this team?`)) {
+            list.removeChild(li);
+
+            // Find and remove from savedTeams
+            const savedIndex = savedTeams.findIndex(team => 
+                JSON.stringify(team) === JSON.stringify(teamsData)
+            );
+            if (savedIndex !== -1) {
+                savedTeams.splice(savedIndex, 1);
+                console.log("Deleted team, Remaining:", savedTeams);
+            }
+        }
+    };
+
+    li.appendChild(delete_btn);
+
+    // Display Team 1 (in a div for line break)
+    const team1Div = document.createElement("div");
+    team1Div.className = "team-line";
+    
+    const team1Label = document.createElement("strong");
+    team1Label.textContent = "Team 1: ";
+    team1Div.appendChild(team1Label);
+
+    for (let i = 0; i < teamsData[0].length; i++) {
+        const span = document.createElement("span");
+        span.innerHTML = teamsData[0][i] + (i < teamsData[0].length - 1 ? "&nbsp;|&nbsp;" : "");
+        team1Div.appendChild(span);
+    }
+    li.appendChild(team1Div);
+
+    // Display Team 2 (in a div for line break)
+    const team2Div = document.createElement("div");
+    team2Div.className = "team-line";
+    
+    const team2Label = document.createElement("strong");
+    team2Label.textContent = "Team 2: ";
+    team2Div.appendChild(team2Label);
+
+    for (let i = 0; i < teamsData[1].length; i++) {
+        const span = document.createElement("span");
+        span.innerHTML = teamsData[1][i] + (i < teamsData[1].length - 1 ? "&nbsp;|&nbsp;" : "");
+        team2Div.appendChild(span);
+    }
+    li.appendChild(team2Div);
+
+    list.appendChild(li);
+
+    /* Stores all data for later use */
+    let currentTeamsArray = [
+        teamsData[0],
+        teamsData[1]
+    ];
+
+    savedTeams.push(currentTeamsArray);
+    console.log('Saved teams:', savedTeams);
+}
+
 function confirmEvent(text = 'Confirm Action') {
     let userConfirmed = confirm(text);
     return userConfirmed;
@@ -301,9 +401,10 @@ function resetScore() {
     updateScore('', true);
 }
 
+let teams = [];
 function setupTeams(numOfTeams = 2, tolerance = 5, manualTeams = []) {
     /* Format: [player1, player2, ..., totalStatScore] */
-    const teams = (manualTeams > 0) ? manualTeams : generateTeams(numOfTeams, tolerance);
+    teams = (manualTeams.length > 0) ? manualTeams : generateTeams(numOfTeams, tolerance);
 
     displayCourtPlayers(teams);
     updateTotalElo();

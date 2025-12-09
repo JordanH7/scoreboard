@@ -70,10 +70,11 @@
         <div class="page" id="randomizer-page">
             <h1>Randomize Teams</h1>
             <button class="" id="randomize" onclick="resetCourt(); setupTeams(2, 5); getAllPlayerNames();">Randomize</button>
+            <button class="" id="save" onclick="saveTeam()">Save</button>
             <div class="text-box" id="elos">Elos: 0 : 0</div>
             <div class="text-box" id="score">Score: 0 : 0</div>
         <div class="court-container">
-            <button class="serving-btn" id="serving-left" onclick="changeServeSide('right', 'manual')" style="display: none">⚫</button>
+            <button class="serving-btn" id="serving-left" onclick="changeServeSide('right', 'manual')" style="display: none"></button>
             <div class="volleyball-court">
                 <div class="court-side" data-side="left">
                     <div class="player-box"><span class="player-name" id="left-P6">P6</span><span class="edit-player">✏️</span></div>
@@ -93,11 +94,12 @@
                     <div class="player-box"><span class="player-name" id="right-P6">P6</span><span class="edit-player">✏️</span></div>
                 </div>
             </div>
-            <button class="serving-btn" id="serving-right" onclick="changeServeSide('left', 'manual')">⚫</button>
+            <button class="serving-btn" id="serving-right" onclick="changeServeSide('left', 'manual')"></button>
         </div>
         </div>
         <div class="page" id="saves-page">
             <h1>Saved Teams</h1>
+            <ul class="list" id="teams-list"></ul>
         </div>
         <div class="page" id="players-page">
             <h1>Add Players</h1>
