@@ -69,33 +69,44 @@
         </div>
         <div class="page" id="randomizer-page">
             <h1>Randomize Teams</h1>
-            <button class="" id="randomize" onclick="resetCourt(); setupTeams(2, 5); getAllPlayerNames();">Randomize</button>
+            <button class="" id="randomize" onclick="resetCourt(); setupTeams(2, 5);">Randomize</button>
             <button class="" id="save" onclick="saveTeam()">Save</button>
             <div class="text-box" id="elos">Elos: 0 : 0</div>
             <div class="text-box" id="score">Score: 0 : 0</div>
-        <div class="court-container">
-            <button class="serving-btn" id="serving-left" onclick="changeServeSide('right', 'manual')" style="display: none"></button>
-            <div class="volleyball-court">
-                <div class="court-side" data-side="left">
-                    <div class="player-box"><span class="player-name" id="left-P6">P6</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="left-P1">P1</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="left-P5">P5</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="left-P2">P2</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="left-P4">P4</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="left-P3">P3</span><span class="edit-player">✏️</span></div>
-                </div>
-                <div class="court-net"></div>
-                <div class="court-side" data-side="right">
-                    <div class="player-box"><span class="player-name" id="right-P3">P3</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="right-P4">P4</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="right-P2">P2</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="right-P5">P5</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="right-P1">P1</span><span class="edit-player">✏️</span></div>
-                    <div class="player-box"><span class="player-name" id="right-P6">P6</span><span class="edit-player">✏️</span></div>
-                </div>
+            <div>
+                <label>
+                    <input class="radio-btn" id="left" name="points" type="radio">15
+                </label>
+                <label>
+                    <input class="radio-btn" id="right" name="points" type="radio">21
+                </label>
+                <label>
+                    <button class="" id="save-replay" onclick="saveMatchReplay()">Save Current
+                </label>
             </div>
-            <button class="serving-btn" id="serving-right" onclick="changeServeSide('left', 'manual')"></button>
-        </div>
+            <div class="court-container">
+                <button class="serving-btn" id="serving-left" onclick="changeServeSide('right', 'manual')" style="display: none"></button>
+                <div class="volleyball-court">
+                    <div class="court-side" data-side="left">
+                        <div class="player-box"><span class="player-name" id="left-P6">P6</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="left-P1">P1</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="left-P5">P5</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="left-P2">P2</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="left-P4">P4</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="left-P3">P3</span><span class="edit-player">✏️</span></div>
+                    </div>
+                    <div class="court-net"></div>
+                    <div class="court-side" data-side="right">
+                        <div class="player-box"><span class="player-name" id="right-P3">P3</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="right-P4">P4</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="right-P2">P2</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="right-P5">P5</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="right-P1">P1</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="right-P6">P6</span><span class="edit-player">✏️</span></div>
+                    </div>
+                </div>
+                <button class="serving-btn" id="serving-right" onclick="changeServeSide('left', 'manual')"></button>
+            </div>
         </div>
         <div class="page" id="saves-page">
             <h1>Saved Teams</h1>
@@ -116,6 +127,34 @@
         </div>
         <div class="page" id="replay-page">
             <h1>Replay Mode</h1>
+            <div class="court-container">
+                <button class="serving-btn" id="replay-serving-left" style="display: none"></button>
+                <div class="volleyball-court">
+                    <div class="court-side" data-side="left">
+                        <div class="player-box"><span class="player-name" id="replay-left-P6">P6</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-left-P1">P1</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-left-P5">P5</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-left-P2">P2</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-left-P4">P4</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-left-P3">P3</span><span class="edit-player">✏️</span></div>
+                    </div>
+                    <div class="court-net"></div>
+                    <div class="court-side" data-side="right">
+                        <div class="player-box"><span class="player-name" id="replay-right-P3">P3</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-right-P4">P4</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-right-P2">P2</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-right-P5">P5</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-right-P1">P1</span><span class="edit-player">✏️</span></div>
+                        <div class="player-box"><span class="player-name" id="replay-right-P6">P6</span><span class="edit-player">✏️</span></div>
+                    </div>
+                </div>
+                <button class="serving-btn" id="replay-serving-right"></button>
+            </div>
+            <div>
+                <button class="arrow" id="replay-back"></button>
+                <button class="arrow" id="replay-forward"></button>
+            </div>
+            <ul class="list" id="matches-list"></ul>
         </div>
     </body>
 </html>

@@ -295,13 +295,13 @@ h4 {
     font-weight: bold;
 }
 
-#randomize, #save {
+#randomize, #save, #save-replay {
     height: auto;
     width: auto;
     margin: 1px;
 }
 
-#randomize:hover, #save:hover {
+#randomize:hover, #save:hover, #save-replay:hover {
     border-color: #ffffff;
     color: #ffffff;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);

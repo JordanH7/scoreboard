@@ -1,3 +1,38 @@
+let matchData = {
+    'teams' : [], // ["starting serve", ["team 1"], ["team 2"]]
+    'in match inputs' : [], // ["input 1", "input 2", ...]
+    'player sub' : ["", "", []] // ['subbed out', 'subbed in', ['left score', 'right score']]
+}
+const defaultMatchData = {
+    'teams': [],
+    "in match inputs": [],
+    "player sub": ["", "", []]
+};
+const savedMatches = []; // [["Date", 'matchData']]
+
+function saveMatchReplay() {
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const formatted = `${month}/${day} - ${hours}:${minutes}`;
+    
+    if (JSON.stringify(matchData) !== JSON.stringify(defaultMatchData)) {
+        savedMatches.push([formatted, structuredClone(matchData)]);
+        const matchIndex = savedMatches.length - 1;
+        console.log(matchData);
+        addMatchData(formatted, matchIndex);
+        clearMatchData();
+        console.log(formatted, savedMatches);
+    }
+}
+
+function clearMatchData() {
+    matchData = structuredClone(defaultMatchData);
+    console.log('Cleared Match Data');
+}
+
 function menu_display(show) {
     const display = show ? "block" : "none";
     document.getElementById('menu-overlay').style.display = display
@@ -26,6 +61,8 @@ document.querySelectorAll('.question').forEach(question => {
             const data = e.target.textContent;
             console.log(dataType, data);
             sendData(dataType, data);
+
+            matchData['in match inputs'].push(data);
         }
     });
 });
@@ -111,7 +148,6 @@ function addPlayerData() {
     li.appendChild(delete_btn);
     list.appendChild(li);
 
-    /* Stores all data for later use */
     let currentPlayerArray = [
         checkbox.checked,
         playerName,
@@ -128,7 +164,6 @@ function saveTeam() {
     const list = document.getElementById('teams-list');
     const delete_btn = document.createElement("button");
 
-    // Collect left team players
     for (let i = 1; i <= numOfPlayers; i++) {
         const element = document.getElementById(`left-P${i}`);
         if (element) {
@@ -136,7 +171,6 @@ function saveTeam() {
         }
     }
     
-    // Collect right team players
     for (let i = 1; i <= numOfPlayers; i++) {
         const element = document.getElementById(`right-P${i}`);
         if (element) {
@@ -146,7 +180,6 @@ function saveTeam() {
 
     console.log('Teams to save:', teamsData);
 
-    /* Adds the data to the list */
     const li = document.createElement('li');
     li.className = "li-button-teams";
     li.setAttribute("tabindex", "0");
@@ -158,7 +191,6 @@ function saveTeam() {
         page_display(true, 'randomizer-page');
     };
     
-    /* Deletes a team */
     delete_btn.textContent = "X";
     delete_btn.classList = "delete-btn delete-teams";
     
@@ -167,7 +199,6 @@ function saveTeam() {
         if (confirmEvent(`Are you sure you want to delete this team?`)) {
             list.removeChild(li);
 
-            // Find and remove from savedTeams
             const savedIndex = savedTeams.findIndex(team => 
                 JSON.stringify(team) === JSON.stringify(teamsData)
             );
@@ -195,7 +226,6 @@ function saveTeam() {
     }
     li.appendChild(team1Div);
 
-    // Display Team 2 (in a div for line break)
     const team2Div = document.createElement("div");
     team2Div.className = "team-line";
     
@@ -212,7 +242,6 @@ function saveTeam() {
 
     list.appendChild(li);
 
-    /* Stores all data for later use */
     let currentTeamsArray = [
         teamsData[0],
         teamsData[1]
@@ -333,6 +362,13 @@ function updateScore(team, reset = false) {
     }
     document.getElementById('score').textContent = `Score: ${team_Left} : ${team_Right}`;
 
+    if ((team_Left == 1 && team_Right == 0) || (team_Left == 0 && team_Right == 1)) {
+        matchData['teams'][0] = serving;
+        matchData['teams'][1] = teams[0];
+        matchData['teams'][2] = teams[1];
+        console.log('serving', serving);
+    }
+
     if (team === serving || reset) {
         return;
     } else {
@@ -415,15 +451,16 @@ function resetCourt() {
     setupTeams(2, 5, [['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 0], ['P1', 'P2', 'P3', 'P4', 'P5', 'P6']]);
 }
 
-function displayCourtPlayers(teams) {
+function displayCourtPlayers(teams, replay) {
     const left = teams[0];
     const right = teams[1];
 
+    replay ? replay = 'replay-' : replay = '';
     for (let i = 1; i < left.length; i++) {
-        document.getElementById(`left-P${i}`).textContent = left[i-1];
+        document.getElementById(`${replay}left-P${i}`).textContent = left[i-1];
     }
     for (let i = 1; i < right.length; i++) {
-        document.getElementById(`right-P${i}`).textContent = right[i-1];
+        document.getElementById(`${replay}right-P${i}`).textContent = right[i-1];
     }
 }
 
@@ -483,6 +520,12 @@ document.querySelectorAll('.player-box').forEach(box => {
                     input.replaceWith(newSpan);
 
                     updateTotalElo();
+                    
+                    scoreString = document.getElementById('score').textContent;
+                    const parts = scoreString.split(":").map(s => s.trim());
+                    const team_Left = parts[1];
+                    const team_Right = parts[2];
+                    matchData['player sub'].push([originalValue, newValue, [team_Left, team_Right]]);
                     console.log(`Player name changed from "${originalValue}" to "${newValue}"`);
                 } else {
                     // Restore original span if unchanged
@@ -520,14 +563,44 @@ function updateTotalElo() {
     document.getElementById('elos').textContent = `Elos: ${leftElo} : ${rightElo}`;
 }
 
-function getAllPlayerNames() {
-    const names = [];
-    document.querySelectorAll('.player-box').forEach(box => {
-        const nameEl = box.querySelector('.player-name');
-        if (nameEl) {
-            names.push(nameEl.textContent.trim());
+function addMatchData(date, index) {
+    const list = document.getElementById('matches-list');
+    const delete_btn = document.createElement("button");
+
+    const li = document.createElement('li');
+    li.className = "bullet_points li-button";
+    li.setAttribute("tabindex", "0");
+
+    li.onclick = () => {
+        console.log("List item clicked:", li.textContent);
+        setUpReplay(savedMatches[index]);
+    };
+    
+    const span = document.createElement("span");
+    span.innerHTML = date;
+    li.appendChild(span);
+
+    delete_btn.textContent = "X";
+    delete_btn.classList = "delete-btn delete-match";
+    
+    delete_btn.onclick = (event) => {
+        event.stopPropagation();
+        if (confirmEvent("Are you sure you want to delete this match?")) {
+            list.removeChild(li);
+            savedMatches.splice(index, 1);
+            console.log("Deleted match, Remaining:", savedMatches);
         }
-    });
+    };
+
+    li.appendChild(delete_btn);
+    list.appendChild(li);
+}
+
+function setUpReplay(savedMatch) {
+    teams = [savedMatch[1]['teams'][1], savedMatch[1]['teams'][2]];
+    console.log(savedMatch[1]);
+    console.log(savedMatches);
+    displayCourtPlayers(teams, true);
 }
 
 function sendData(dataType, data) {
