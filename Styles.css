@@ -320,7 +320,7 @@ h4 {
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.0s ease;
     background: linear-gradient(145deg, #2a1010, #1a0a0a);
     box-shadow: 0 0 20px rgba(228, 28, 56, 0.6);
 }

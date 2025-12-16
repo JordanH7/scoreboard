@@ -15,7 +15,8 @@ function saveMatchReplay() {
     const month = date.getMonth() + 1;
     const day = date.getDate();
     const hours = date.getHours();
-    const minutes = date.getMinutes();
+    let minutes = date.getMinutes();
+    minutes = String(minutes).length == 2 ? minutes : `0${minutes}`;
     const formatted = `${month}/${day} - ${hours}:${minutes}`;
     
     if (JSON.stringify(matchData) !== JSON.stringify(defaultMatchData)) {
@@ -85,11 +86,24 @@ document.getElementById('playerData-randomizer').addEventListener('submit', func
 })
 
 var playerData = [];
-function addPlayerData() {
-    const form = document.getElementById('playerData-randomizer');
-    const formData = form.querySelectorAll('input');
+addPlayerData([{value:'Jordan'}, {value:1}]);
+addPlayerData([{value:'Jaimeson'}, {value:1}]);
+addPlayerData([{value:'Bryson'}, {value:1}]);
+addPlayerData([{value:'Joshua'}, {value:1}]);
+addPlayerData([{value:'Boston'}, {value:1}]);
+addPlayerData([{value:'Emerson'}, {value:1}]);
+addPlayerData([{value:'Staci'}, {value:1}]);
+addPlayerData([{value:'Dave'}, {value:1}]);
+addPlayerData([{value:'Caleb'}, {value:1}]);
+addPlayerData([{value:'Malacki'}, {value:1}]);
+addPlayerData([{value:'Alice'}, {value:1}]);
+addPlayerData([{value:'Noah'}, {value:1}]);
+function addPlayerData(manualData) {
+    const form = manualData || document.getElementById('playerData-randomizer');
+    const formData = manualData || form.querySelectorAll('input');
     const list = document.getElementById('players-list');
     const delete_btn = document.createElement("button");
+    console.log(formData);
 
     /* Adds the data to the list */
     const li = document.createElement('li');
@@ -123,7 +137,7 @@ function addPlayerData() {
 
     li.appendChild(checkbox);
 
-    for (let i = 0; i < formData.length - 1; i++) {
+    for (let i = 0; manualData ? i < formData.length : i < formData.length - 1; i++) {
         const span = document.createElement("span");
         span.innerHTML = formData[i].value + "&nbsp;";
         li.appendChild(span);
@@ -153,6 +167,7 @@ function addPlayerData() {
         playerName,
         Number(formData[1].value)
     ];
+    console.log(currentPlayerArray, playerData);
 
     playerData.push(currentPlayerArray);
     console.log(playerData);
@@ -382,7 +397,7 @@ function updateScore(team, reset = false) {
             hasServedRight = true;
         } else {
             console.log('rotate positions', team);
-            rotatePositions(team);
+            rotatePositions_Forward(team);
         }
     }
 }
@@ -397,12 +412,14 @@ function updateQuestionNames(scoringTeam) {
     }
 }
 
-function changeServeSide(newSide, type = 'manual') {
-    if (document.getElementById('score').textContent == 'Score: 0 : 0' || type != 'manual') {
-        document.getElementById(`serving-${newSide}`).style.display = 'block';
+function changeServeSide(newSide, type = 'manual', replay) {
+    replay ? replay = 'replay-' : replay = '';
+    if (document.getElementById(`${replay}score`).textContent == 'Score: 0 : 0' || type != 'manual') {
+        document.getElementById(`${replay}serving-${newSide}`).style.visibility = 'visible';
         let side = newSide == 'left' ? 'right' : 'left';
-        document.getElementById(`serving-${side}`).style.display = 'none';
+        document.getElementById(`${replay}serving-${side}`).style.visibility = 'hidden';
         serving = newSide;
+        console.log(`${replay}serving-${newSide}`);
     } else {
         console.log("Can't change serve in a match");
     }
@@ -417,19 +434,21 @@ function changeServeSide(newSide, type = 'manual') {
     }
 }
 
-function rotatePositions(team) {
+function rotatePositions_Forward(team, replay) {
+    replay ? replay = 'replay-' : replay = '';
+
     if (team == 'left') {
-        const temp = document.getElementById('left-P6').textContent;
+        const temp = document.getElementById(`${replay}left-P${numOfPlayers}`).textContent;
         for (let i = numOfPlayers; i > 1; i--) {
-            document.getElementById(`left-P${i}`).textContent = document.getElementById(`left-P${i-1}`).textContent;
+            document.getElementById(`${replay}left-P${i}`).textContent = document.getElementById(`${replay}left-P${i-1}`).textContent;
         }
-        document.getElementById('left-P1').textContent = temp;
+        document.getElementById(`${replay}left-P1`).textContent = temp;
     } else if (team == 'right') {
-        const temp = document.getElementById('right-P6').textContent;
+        const temp = document.getElementById(`${replay}right-P${numOfPlayers}`).textContent;
         for (let i = numOfPlayers; i > 1; i--) {
-            document.getElementById(`right-P${i}`).textContent = document.getElementById(`right-P${i-1}`).textContent;
+            document.getElementById(`${replay}right-P${i}`).textContent = document.getElementById(`${replay}right-P${i-1}`).textContent;
         }
-        document.getElementById('right-P1').textContent = temp;
+        document.getElementById(`${replay}right-P1`).textContent = temp;
     }
 }
 
@@ -545,22 +564,23 @@ document.querySelectorAll('.player-box').forEach(box => {
 });
 
 const numOfPlayers = 6;
-function updateTotalElo() {
+function updateTotalElo(replay) {
+    replay ? replay = 'replay-' : replay = '';
     let leftElo = 0;
     let rightElo = 0;
 
     for (let i = 1; i <= numOfPlayers; i++) {
-        currentPlayer = document.getElementById(`left-P${i}`).textContent;
+        currentPlayer = document.getElementById(`${replay}left-P${i}`).textContent;
         const playerIndex = playerData.findIndex(player => player[1] === currentPlayer);
         leftElo += (playerIndex != -1) ? Number(playerData[playerIndex][2]) : 0;
     }
     for (let i = 1; i <= numOfPlayers; i++) {
-        currentPlayer = document.getElementById(`right-P${i}`).textContent;
+        currentPlayer = document.getElementById(`${replay}right-P${i}`).textContent;
         const playerIndex = playerData.findIndex(player => player[1] === currentPlayer);
         rightElo += (playerIndex != -1) ? Number(playerData[playerIndex][2]) : 0;
     }
 
-    document.getElementById('elos').textContent = `Elos: ${leftElo} : ${rightElo}`;
+    document.getElementById(`${replay}elos`).textContent = `Elos: ${leftElo} : ${rightElo}`;
 }
 
 function addMatchData(date, index) {
@@ -596,11 +616,83 @@ function addMatchData(date, index) {
     list.appendChild(li);
 }
 
+let currentLoadedMatch;
+let servingSide;
 function setUpReplay(savedMatch) {
-    teams = [savedMatch[1]['teams'][1], savedMatch[1]['teams'][2]];
-    console.log(savedMatch[1]);
-    console.log(savedMatches);
+    currentLoadedMatch = savedMatch;
+    teams = [currentLoadedMatch[1]['teams'][1], currentLoadedMatch[1]['teams'][2]];
     displayCourtPlayers(teams, true);
+
+    servingSide = currentLoadedMatch[1]['teams'][0];
+    document.getElementById(`replay-serving-${servingSide}`).style.visibility = 'visible';
+    servingSide == 'left' ? oppTeam = 'right' : oppTeam = 'left';
+    document.getElementById(`replay-serving-${oppTeam}`).style.visibility = 'hidden';
+    replayStep = -1;
+    replayLeftScore = 0;
+    replayRightScore = 0;
+    document.getElementById("replay-score").textContent = `Score: ${replayLeftScore} : ${replayRightScore}`;
+    updateTotalElo(true);
+}
+
+let replayStep = -1;
+let replayLeftScore = 0;
+let replayRightScore = 0;
+let hasReplayServedLeft = false;
+let hasReplayServedRight = false;
+function processNextInput(forward) {
+    const initialServingSide = currentLoadedMatch[1]['teams'][0];
+    const inputs = structuredClone(currentLoadedMatch[1]['in match inputs']);
+    inputs.unshift("");
+
+    const pointGroups = [];
+    for (let i = 1; i < inputs.length; i += 4) {
+        pointGroups.push(inputs.slice(i, i + 4));
+    }
+
+    if (forward) replayStep++;
+    else replayStep--;
+
+    if (replayStep < -1) {
+        replayStep = pointGroups.length - 1;
+    }
+    if (replayStep >= pointGroups.length) {
+        replayStep = -1;
+    }
+    console.log(replayStep);
+
+    servingSide = initialServingSide;
+    replayLeftScore = 0;
+    replayRightScore = 0;
+    hasReplayServedLeft = false;
+    hasReplayServedRight = false;
+    initialServingSide == 'left' ? hasReplayServedLeft = true : hasReplayServedRight = true;
+
+    changeServeSide(initialServingSide, 'auto', true);
+    displayCourtPlayers(teams, true);
+
+    for (let i = 0; i <= replayStep; i++) {
+        const scoringTeam = pointGroups[i][0] === "Team1" ? "left" : "right";
+
+        console.log(scoringTeam, servingSide, hasReplayServedLeft, hasReplayServedRight);
+        if (scoringTeam !== servingSide) {
+            servingSide = scoringTeam;
+    
+            if (scoringTeam === 'left' && !hasReplayServedLeft) {
+                hasReplayServedLeft = true;
+            } else if (scoringTeam === 'right' && !hasReplayServedRight) {
+                hasReplayServedRight = true;
+            } else {
+                rotatePositions_Forward(scoringTeam, true);
+            }
+        }
+
+        scoringTeam === "left" ? replayLeftScore++ : replayRightScore++;
+        changeServeSide(scoringTeam, 'auto', true);
+    }
+
+    document.getElementById("replay-score").textContent = `Score: ${replayLeftScore} : ${replayRightScore}`;
+
+    updateTotalElo(true);
 }
 
 function sendData(dataType, data) {

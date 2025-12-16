@@ -85,7 +85,7 @@
                 </label>
             </div>
             <div class="court-container">
-                <button class="serving-btn" id="serving-left" onclick="changeServeSide('right', 'manual')" style="display: none"></button>
+                <button class="serving-btn" id="serving-left" onclick="changeServeSide('right', 'manual')" style="visibility: hidden"></button>
                 <div class="volleyball-court">
                     <div class="court-side" data-side="left">
                         <div class="player-box"><span class="player-name" id="left-P6">P6</span><span class="edit-player">✏️</span></div>
@@ -127,8 +127,10 @@
         </div>
         <div class="page" id="replay-page">
             <h1>Replay Mode</h1>
+            <div class="text-box" id="replay-elos">Elos: 0 : 0</div>
+            <div class="text-box" id="replay-score">Score: 0 : 0</div>
             <div class="court-container">
-                <button class="serving-btn" id="replay-serving-left" style="display: none"></button>
+                <button class="serving-btn" id="replay-serving-left" style="visibility: hidden"></button>
                 <div class="volleyball-court">
                     <div class="court-side" data-side="left">
                         <div class="player-box"><span class="player-name" id="replay-left-P6">P6</span><span class="edit-player">✏️</span></div>
@@ -151,8 +153,8 @@
                 <button class="serving-btn" id="replay-serving-right"></button>
             </div>
             <div>
-                <button class="arrow" id="replay-back"></button>
-                <button class="arrow" id="replay-forward"></button>
+                <button class="arrow" id="replay-back" onclick="processNextInput(false)"></button>
+                <button class="arrow" id="replay-forward" onclick="processNextInput(true)"></button>
             </div>
             <ul class="list" id="matches-list"></ul>
         </div>

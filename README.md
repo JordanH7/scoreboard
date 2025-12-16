@@ -16,6 +16,7 @@
         * Loads team onto randomizer tab : done
     * Stat breakdown (by person)
     * Replay mode
+      * Edit player saves directly from page
   * Manual Inputs
     * Players starting rankings
     * Players (+ starting locations)
