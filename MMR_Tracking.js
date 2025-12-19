@@ -378,10 +378,13 @@ function updateScore(team, reset = false) {
     document.getElementById('score').textContent = `Score: ${team_Left} : ${team_Right}`;
 
     if ((team_Left == 1 && team_Right == 0) || (team_Left == 0 && team_Right == 1)) {
-        matchData['teams'][0] = serving;
+        element = document.getElementById('serving-right');
+        initialServe = window.getComputedStyle(element).visibility == 'visible' ? 'right' : 'left';
+        initialServe == 'right' ? hasServedRight = true : hasServedLeft = true;
+        matchData['teams'][0] = initialServe;
         matchData['teams'][1] = teams[0];
         matchData['teams'][2] = teams[1];
-        console.log('serving', serving);
+        console.log('serving', initialServe);
     }
 
     if (team === serving || reset) {
@@ -667,6 +670,7 @@ function processNextInput(forward) {
     hasReplayServedRight = false;
     initialServingSide == 'left' ? hasReplayServedLeft = true : hasReplayServedRight = true;
 
+    console.log(initialServingSide);
     changeServeSide(initialServingSide, 'auto', true);
     displayCourtPlayers(teams, true);
 
