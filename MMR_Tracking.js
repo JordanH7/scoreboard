@@ -702,7 +702,7 @@ function processNextInput(forward) {
 function sendData(dataType, data) {
     switch(dataType) {
         case 'Team Score':
-            // Send data to ESP32
+            sendToESP32(data == 'Team1' ? 10 : 20);
             // Send data to server
             break;
         case 'Player Score':
@@ -719,4 +719,72 @@ function sendData(dataType, data) {
             // Send data to server
             break;
     }
+}
+
+// WIFI CONNECTION
+let socket;
+
+function connectToESP32() {
+  // Use the IP shown in Serial Monitor after Wi-Fi connects
+  socket = new WebSocket("ws://ESP32_IP_HERE:81");
+
+  socket.onopen = () => {
+    console.log("✅ WebSocket connected to ESP32");
+  };
+
+  socket.onmessage = (event) => {
+    console.log("📥 From ESP32:", event.data);
+    // event.data will be "1"–"6" when actions run
+  };
+
+  socket.onclose = () => {
+    console.log("🔌 WebSocket disconnected");
+  };
+
+  socket.onerror = (err) => {
+    console.error("⚠️ WebSocket error:", err);
+  };
+}
+
+function sendToESP32(num) {
+  if (!socket || socket.readyState !== WebSocket.OPEN) {
+    console.log("Not connected yet");
+    return;
+  }
+
+  const msg = String(num);   // "1"–"6"
+  socket.send(msg);
+  console.log("📤 Sent:", msg);
+}
+
+// BLE CONNECTION
+// let characteristic;
+
+// async function connectToESP32() {
+//   const device = await navigator.bluetooth.requestDevice({
+//     filters: [{ name: "Big Men" }],
+//     optionalServices: ["12345678-1234-5678-1234-56789abcdef0"]
+//   });
+
+//   const server = await device.gatt.connect();
+//   const service = await server.getPrimaryService("12345678-1234-5678-1234-56789abcdef0");
+//   characteristic = await service.getCharacteristic("87654321-4321-6789-4321-0fedcba98765");
+
+//   console.log("✅ Connected to ESP32");
+// }
+
+// async function sendToESP32(num) {
+//   if (!characteristic) {
+//     console.log("Not connected yet");
+//     return;
+//   }
+
+//   const encoder = new TextEncoder();
+//   await characteristic.writeValue(encoder.encode(String(num)));
+
+//   console.log("📤 Sent:", num);
+// }
+
+function sendToServer(value) {
+    
 }
