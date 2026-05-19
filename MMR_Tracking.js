@@ -726,7 +726,7 @@ let socket;
 
 function connectToESP32() {
   // Use the IP shown in Serial Monitor after Wi-Fi connects
-    socket = new WebSocket("ws://172.20.10.5:81"");
+    socket = new WebSocket("ws://172.20.10.5:81");
   // socket = new WebSocket("wss://echo.websocket.org");
 
 socket.onopen = () => {
