@@ -722,34 +722,34 @@ function sendData(dataType, data) {
 }
 
 // WIFI CONNECTION
-let socket;
+// let socket;
 
-function connectToESP32() {
-  // Use the IP shown in Serial Monitor after Wi-Fi connects
-    socket = new WebSocket("ws://172.20.10.11:81");
-  // socket = new WebSocket("wss://echo.websocket.org");
+// function connectToESP32() {
+//   // Use the IP shown in Serial Monitor after Wi-Fi connects
+//     socket = new WebSocket("ws://172.20.10.11:81");
+//   // socket = new WebSocket("wss://echo.websocket.org");
 
-socket.onopen = () => {
-    console.log("✅ WebSocket connected to ESP32");
-};
-socket.onmessage = (event) => {
-    console.log("📥 From ESP32:", event.data);
-    document.getElementById('debug').innerText = "Last sent: " + event.data;
-};
+// socket.onopen = () => {
+//     console.log("✅ WebSocket connected to ESP32");
+// };
 // socket.onmessage = (event) => {
-//     console.log("📥 Echo back:", event.data);
-//     // Add this to see it on screen instead of just console
+//     console.log("📥 From ESP32:", event.data);
 //     document.getElementById('debug').innerText = "Last sent: " + event.data;
 // };
+// // socket.onmessage = (event) => {
+// //     console.log("📥 Echo back:", event.data);
+// //     // Add this to see it on screen instead of just console
+// //     document.getElementById('debug').innerText = "Last sent: " + event.data;
+// // };
 
-  socket.onclose = () => {
-    console.log("🔌 WebSocket disconnected");
-  };
+//   socket.onclose = () => {
+//     console.log("🔌 WebSocket disconnected");
+//   };
 
-  socket.onerror = (err) => {
-    console.error("⚠️ WebSocket error:", err);
-  };
-}
+//   socket.onerror = (err) => {
+//     console.error("⚠️ WebSocket error:", err);
+//   };
+// }
 
 function sendToESP32(num) {
   if (!socket || socket.readyState !== WebSocket.OPEN) {
@@ -763,32 +763,32 @@ function sendToESP32(num) {
 }
 
 // BLE CONNECTION
-// let characteristic;
+let characteristic;
 
-// async function connectToESP32() {
-//   const device = await navigator.bluetooth.requestDevice({
-//     filters: [{ name: "Big Men" }],
-//     optionalServices: ["12345678-1234-5678-1234-56789abcdef0"]
-//   });
+async function connectToESP32() {
+  const device = await navigator.bluetooth.requestDevice({
+    filters: [{ name: "Big Men" }],
+    optionalServices: ["12345678-1234-5678-1234-56789abcdef0"]
+  });
 
-//   const server = await device.gatt.connect();
-//   const service = await server.getPrimaryService("12345678-1234-5678-1234-56789abcdef0");
-//   characteristic = await service.getCharacteristic("87654321-4321-6789-4321-0fedcba98765");
+  const server = await device.gatt.connect();
+  const service = await server.getPrimaryService("12345678-1234-5678-1234-56789abcdef0");
+  characteristic = await service.getCharacteristic("87654321-4321-6789-4321-0fedcba98765");
 
-//   console.log("✅ Connected to ESP32");
-// }
+  console.log("✅ Connected to ESP32");
+}
 
-// async function sendToESP32(num) {
-//   if (!characteristic) {
-//     console.log("Not connected yet");
-//     return;
-//   }
+async function sendToESP32(num) {
+  if (!characteristic) {
+    console.log("Not connected yet");
+    return;
+  }
 
-//   const encoder = new TextEncoder();
-//   await characteristic.writeValue(encoder.encode(String(num)));
+  const encoder = new TextEncoder();
+  await characteristic.writeValue(encoder.encode(String(num)));
 
-//   console.log("📤 Sent:", num);
-// }
+  console.log("📤 Sent:", num);
+}
 
 function sendToServer(value) {
     
