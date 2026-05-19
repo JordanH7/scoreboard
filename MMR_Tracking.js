@@ -726,22 +726,21 @@ let socket;
 
 function connectToESP32() {
   // Use the IP shown in Serial Monitor after Wi-Fi connects
-  //   socket = new WebSocket("ws://ESP32_IP_HERE:81");
-  socket = new WebSocket("wss://echo.websocket.org");
+    socket = new WebSocket("ws://ESP32_IP_HERE:81");
+  // socket = new WebSocket("wss://echo.websocket.org");
 
-//   socket.onopen = () => {
-//     console.log("✅ WebSocket connected to ESP32");
-//   };
-
-//   socket.onmessage = (event) => {
-//     console.log("📥 From ESP32:", event.data);
-//     // event.data will be "1"–"6" when actions run
-//   };
+socket.onopen = () => {
+    console.log("✅ WebSocket connected to ESP32");
+};
 socket.onmessage = (event) => {
-    console.log("📥 Echo back:", event.data);
-    // Add this to see it on screen instead of just console
+    console.log("📥 From ESP32:", event.data);
     document.getElementById('debug').innerText = "Last sent: " + event.data;
 };
+// socket.onmessage = (event) => {
+//     console.log("📥 Echo back:", event.data);
+//     // Add this to see it on screen instead of just console
+//     document.getElementById('debug').innerText = "Last sent: " + event.data;
+// };
 
   socket.onclose = () => {
     console.log("🔌 WebSocket disconnected");
